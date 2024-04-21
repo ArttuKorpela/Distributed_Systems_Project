@@ -1,0 +1,13 @@
+.item{
+    width: 350px;
+}
+
+.item p{
+    margin: 6px 0px;
+}
+
+.item-price-old{
+    color: #8c8c8c;
+    font-size: 18px;
+    font-weight: 500;
+}
