@@ -1,4 +1,24 @@
 import React, { useState } from 'react';
+import { ShopContext } from '../../context/ShopContext';
+
+const { getTotalCart } = useContext(ShopContext);
+const token = localStorage.getItem('token');
+
+const response = await fetch('http://localhost:8000/user/tokenValid', {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json',
+        'Authorization': token,
+    },
+});
+
+const data = await response.json();
+
+if (data.success) {
+    console.log('Token is valid');
+} else {
+    console.log('Token is not valid');
+}
 
 const Checkout = () => {
   const [name, setName] = useState('');
@@ -6,11 +26,26 @@ const Checkout = () => {
   const [expiryDate, setExpiryDate] = useState('');
   const [cvv, setCvv] = useState('');
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    //backend implementation
-    console.log(name, cardNumber, expiryDate, cvv);
-  }
+    const token = localStorage.getItem('token');
+    const total = getTotalCart();
+    // Call backend API to log in the user and get the token
+    const response = await fetch('http://localhost:8000/user/checkout', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': token,
+        },
+        body: JSON.stringify({ name, cardNumber, expiryDate, cvv, total }),
+    });
+    const data = await response.json();
+    if (data.success) {
+        console.log(data.message);
+    } else {
+        console.log(data.message);
+    }
+}
 
   return (
     <div>

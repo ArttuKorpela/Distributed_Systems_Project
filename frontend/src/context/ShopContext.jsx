@@ -14,6 +14,7 @@ const getDefaultCart = () => {
 
 const ShopContextProvider = (props) => {
     const [cartItems, setCartItem] = useState(getDefaultCart());
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
 
     const addToCart = (itemID) =>{
         setCartItem((previous)=>({...previous,[itemID]:previous[itemID]+1}))
@@ -36,7 +37,7 @@ const ShopContextProvider = (props) => {
     return totalAmount;
     }
 
-    const contextValue = {getTotalCart,productData, cartItems, addToCart, removeFromCart};
+    const contextValue = {getTotalCart, productData, cartItems, addToCart, removeFromCart, isLoggedIn, setIsLoggedIn};
     return(
         <ShopContext.Provider value={contextValue}>
             {props.children}

@@ -1,14 +1,29 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 //import '.CSS/Login.css'
+import { ShopContext } from '../../context/ShopContext';
 
-const Login2 = () => {
+const { setIsLoggedIn } = useContext(ShopContext);
+const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        //backend
-        console.log(email, password);
+        // Call backend API to log in the user and get the token
+        const response = await fetch('http://localhost:8000/user/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ email, password }),
+        });
+        const data = await response.json();
+        if (data.success) {
+            localStorage.setItem('token', data.token);
+            setIsLoggedIn(true);
+        } else {
+            console.log(data.message);
+        }
     }
 
     return(
@@ -25,4 +40,4 @@ const Login2 = () => {
     )
 }
 
-export default Login2
+export default Login

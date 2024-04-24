@@ -7,11 +7,23 @@ const Signup = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    //backend implementation
-    console.log(name, email, password);
-  }
+    // Call backend API to log in the user and get the token
+    const response = await fetch('http://localhost:8000/user/register', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ name, email, password }),
+    });
+    const data = await response.json();
+    if (data.success) {
+        console.log(data.message);
+    } else {
+        console.log(data.message);
+    }
+}
 
   return (
     <div className='signup'>

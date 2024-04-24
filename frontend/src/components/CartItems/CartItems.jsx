@@ -4,7 +4,7 @@ import './CartItems.css'
 import { ShopContext } from '../../context/ShopContext'
 
 const CartItems = () => {
-        const {getTotalCart,productData,cartItems,removeFromCart} = useContext(ShopContext);
+        const {getTotalCart, productData, cartItems, removeFromCart, isLoggedIn} = useContext(ShopContext);
     return (
     <div className='cartitems'>
         <div className="cartitems-format-main">
@@ -41,7 +41,11 @@ const CartItems = () => {
                         <h3>{getTotalCart()}€</h3>
                     </div>
                 </div>
-                <button><Link to="/checkout">Proceed to Checkout</Link></button>
+                {isLoggedIn ? (
+                    <button><Link to="/checkout">Proceed to Checkout</Link></button>
+                ) : (
+                    <button><Link to="/login">Log In to Proceed to Checkout</Link></button>
+                )}
             </div>
         </div>
     </div>
