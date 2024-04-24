@@ -121,5 +121,18 @@ router.post("/tokenValid", ValidateToken, async (req, res) => {
     .json({ success: true, id: req.user, message: "Token is valid" })
 })
 
+// User checkout
+router.post("/checkout", ValidateToken, async (req, res) => {
+  const { name, cardNumber, expiryDate, cvv } = req.body
+
+  if (!name || !cardNumber || !expiryDate || !cvv) {
+    return res
+      .status(400)
+      .json({ success: false, message: "Please enter all fields" })
+  } else {
+    res.status(200).json({ success: true, message: "Payment successful" })
+  }
+})
+
 // Export router
 module.exports = router
