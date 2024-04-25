@@ -4,9 +4,12 @@ const PORT = 8000
 
 // Import routes
 const user = require("./routes/user")
+const cors = require('cors');
 
 // Define middleware to parse JSON data
 app.use(express.json())
+app.use(cors());
+
 
 // Importing mongoose for database
 const mongoose = require("mongoose")

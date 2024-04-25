@@ -1,0 +1,22 @@
+syntax = "proto3";
+
+package payment;
+
+option go_package = "github.com/ArttuKorpela/gRPC_server/server/payment";
+
+// The payment service definition.
+service PaymentService {
+  // Sends a payment request to the server.
+  rpc ProcessPayment (Payment) returns (Response);
+}
+
+// The request message containing the user's phone number and the amount of money.
+message Payment {
+  string phone_number = 1;  // User's phone number
+  double amount = 2;        // Amount of money to be sent
+}
+
+// The response message indicating whether the payment was accepted or declined.
+message Response {
+  bool accepted = 1;  // true if the payment was accepted, false if declined
+}

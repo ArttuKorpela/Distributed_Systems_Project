@@ -1,15 +1,16 @@
 import React, { useContext } from 'react';
-import { ShopContext } from '../../context/ShopContext';
-import { useHistory } from 'react-router-dom';
+import { ShopContext } from '../context/ShopContext';
+import { useNavigate } from 'react-router-dom';
+
 
 const Logout = () => {
     const { setIsLoggedIn } = useContext(ShopContext);
-    const history = useHistory();
+    const navigate = useNavigate();
 
     const handleLogout = () => {
         localStorage.removeItem('token');
         setIsLoggedIn(false);
-        history.push('/');
+        navigate('/');
     }
 
     return (

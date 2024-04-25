@@ -1,14 +1,12 @@
 import React, { useContext, useState } from "react";
-//import '.CSS/Login.css'
-import { ShopContext } from '../../context/ShopContext';
-import { useHistory } from 'react-router-dom';
+import { ShopContext } from "../context/ShopContext";
+import { useNavigate } from 'react-router-dom';
 
-const { setIsLoggedIn } = useContext(ShopContext);
 const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const { setIsLoggedIn } = useContext(ShopContext);
-    const history = useHistory();
+    const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -24,7 +22,7 @@ const Login = () => {
         if (data.success) {
             localStorage.setItem('token', data.token);
             setIsLoggedIn(true);
-            history.push('/logout');
+            navigate('/logout');
         } else {
             console.log(data.message);
         }

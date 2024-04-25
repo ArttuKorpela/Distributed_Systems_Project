@@ -4,6 +4,8 @@ var router = express.Router()
 
 // ValidateToken middleware
 const ValidateToken = require("../auth/ValidateToken")
+const processPayment = require("../payment/paymentclient")
+
 
 // Importing dotenv to use .env for secret key
 require("dotenv").config()
@@ -20,8 +22,10 @@ const User = require("../models/User")
 
 // Register user
 router.post("/register", async (req, res) => {
+  console.log("Registering user...")
   // Get the name, email, password from the request body
   const { name, email, password } = req.body
+  
 
   // If not all fields are entered respond back with false message
   if (!name || !email || !password) {
@@ -123,14 +127,23 @@ router.post("/tokenValid", ValidateToken, async (req, res) => {
 
 // User checkout
 router.post("/checkout", ValidateToken, async (req, res) => {
-  const { phone_number,  total } = req.body
+  const { phoneNumber,  total } = req.body
+  console.log(phoneNumber, total)
 
-  if (!phone_number || !total) {
+  if (!phoneNumber || !total) {
     return res
       .status(400)
       .json({ success: false, message: "Please enter all fields" })
   } else {
-    res.status(200).json({ success: true, message: "Payment successful" })
+    //wait for the gRPC client to be done
+    //The function respons with true of false
+
+    const response = await processPayment(phoneNumber,total)
+    if (response) {
+      res.status(200).json({ success: true, message: "Payment successful" })
+    } else {
+      res.status(400).json({ success: false, message: "Payment unsuccessful" })
+    } 
   }
 })
 
