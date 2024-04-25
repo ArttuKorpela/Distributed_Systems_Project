@@ -25,6 +25,7 @@ const Checkout = () => {
   const [cardNumber, setCardNumber] = useState('');
   const [expiryDate, setExpiryDate] = useState('');
   const [cvv, setCvv] = useState('');
+  const [message, setMessage] = useState('');
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -41,9 +42,9 @@ const Checkout = () => {
     });
     const data = await response.json();
     if (data.success) {
-        console.log(data.message);
+        setMessage(data.message);
     } else {
-        console.log(data.message);
+        setMessage(data.message);
     }
 }
 
@@ -57,6 +58,7 @@ const Checkout = () => {
         <input type='text' placeholder='CVV' value={cvv} onChange={(e) => setCvv(e.target.value)} />
         <button type="submit">Submit</button>
       </form>
+      {message && <p>{message}</p>} {/* Add this line */}
     </div>
   )
 }

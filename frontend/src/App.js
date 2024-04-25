@@ -6,6 +6,7 @@ import Cart from './pages/Cart'
 import Signup from './pages/Signup'
 import Login from './pages/Login'
 import Checkout from './pages/Checkout'
+import Logout from './pages/Logout'
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
         <Route path='/signup' element={<Signup/>}/>
         <Route path='/login' element={<Login/>}/>
         <Route path='/checkout' element={<Checkout/>}/>
+        <Route path='/logout' element={<Logout/>}/>
       </Routes>
       </BrowserRouter>
     </div>
