@@ -123,9 +123,9 @@ router.post("/tokenValid", ValidateToken, async (req, res) => {
 
 // User checkout
 router.post("/checkout", ValidateToken, async (req, res) => {
-  const { name, cardNumber, expiryDate, cvv, total } = req.body
+  const { phone_number,  total } = req.body
 
-  if (!name || !cardNumber || !expiryDate || !cvv || !total) {
+  if (!phone_number || !total) {
     return res
       .status(400)
       .json({ success: false, message: "Please enter all fields" })
